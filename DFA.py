@@ -2,21 +2,21 @@ __author__ = 'ING26'
 from collections import defaultdict
 
 # abrir archivo de texto
-text_file = open("Entrado.txt", "r")
+text_file = open("Automata.txt", "r")
 # leer el texto y almacenar el contenido en un arreglo
 # e ir dividiendo la cadena en bloques despues de las comas
 datos = text_file.read().splitlines()
 
-# alacenamos los bloques de datos en sus variables correspondientes
-q            = datos[0].split(" ")     # conjunto de estados
+# almacenamos los bloques de datos en sus variables correspondientes
+q            = datos[0].split(" ")      # conjunto de estados
 sigma        = datos[1].split(" ")      # el alfabeto del lenguaje
 inicio       = datos[2].split(" ")[0]   # el estado inicial del automata
                                         # como retorna una lista y es un solo elemento se saca directamente
 finales      = datos[3].split(" ")      # conjunto de estados finales del automata
-cambios      = datos[4].split(" ")    # arreglo de tabla de transiciones
+cambios      = datos[4].split(" ")      # arreglo de tabla de transiciones
 arregloTemporal = []                    # almacenara la cadena dividida de la tabla de transicion
 
-# recorrer la cadena del archivo para dividir la cadena despues de cada guion medio
+# recorrer el arreglo "cambios" para dividir la cadena despues de cada guion medio
 for cambio in cambios:
     arregloTemporal.append(cambio.split("-"))
 
@@ -61,3 +61,26 @@ for palabra in palabras:
     # igualando el estado actual con el estado inicial
     estadoActual = inicio
 #########################################################
+#----------------------------Generando Grafico--------------------------------------
+file=open("graphdic.gv","w")
+file.write("digraph G {\n")
+file.write("rankdir=LR;\n")
+file.write('inicio [shape=none,label=""];\n')
+file.write("node [shape=doublecircle];")
+for acept in finales:
+    file.write(" "+acept)
+file.write(";\n")
+file.write("node [shape=circle];\n")
+file.write("inicio->"+inicio+"\n")
+
+for estado in q:
+    for simbolo in sigma:
+        file.write(estado+"->"+transiciones[estado][simbolo]+'[label="'+simbolo+'"];\n')
+file.write("}")
+file.close()
+
+
+import os
+os.system("dot -Tpng graphdic.gv -o graphdic.png")
+os.system("xdg-open graphdic.png")
+
