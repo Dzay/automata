@@ -1,4 +1,6 @@
-__author__ = 'ING26'
+#########################################################################################
+#                                     Lectura de datos
+#########################################################################################
 from collections import defaultdict
 
 # abrir archivo de texto
@@ -32,11 +34,12 @@ for i in range(0,len(arregloTemporal)):
 # lista de palbras
 palabras=["AB","AC","AAA","AAAA","ABBA"]
 
+#########################################################################################
+#                              Evaluacion de las cadenas ingresadas
+#########################################################################################
 # Inicializamos la maquina de estados
 # asignando el estado de inicio
 estadoActual= inicio
-
-###########################################################
 # le pasamos la lista de palabras para procesarlos
 for palabra in palabras:
     for char in palabra: # obtener un caracter de la palabra
@@ -60,8 +63,10 @@ for palabra in palabras:
     # resetear la maquina de estados
     # igualando el estado actual con el estado inicial
     estadoActual = inicio
-#########################################################
-#----------------------------Generando Grafico--------------------------------------
+
+#########################################################################################
+#                              Generacion del grafico del automata
+#########################################################################################
 file=open("graphdic.gv","w")
 file.write("digraph G {\n")
 file.write("rankdir=LR;\n")
